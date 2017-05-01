@@ -48,11 +48,17 @@ class Game {
   }
 
   start () {
-    // Starts game
+    this.getPlayerNames()
+    this.pickFirstPlayer()
   }
 
   pickFirstPlayer () {
     // Randomly chooses who plays first
+    let players = this.printPlayers()
+    let index = Math.floor(Math.random())
+    let firstPlayer = players[index]
+
+    return firstPlayer
   }
 
   placeMark (i, j) {

@@ -7,7 +7,10 @@ test('Game', game => {
 
   let myGame = new Game()
 
-  board.deepEqual(actual, expected, 'Should init and print a board of 3x3')
+  actual = myGame.getPlayerNames()
+  expected = ['Craig', 'Fred']
 
-  board.end()
+  game.deepEqual(actual, expected, 'Should accept names of players and return them')
+
+  game.end()
 })
