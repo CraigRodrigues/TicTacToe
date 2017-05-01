@@ -18,7 +18,7 @@ class Game {
     this.active = true
   }
 
-  getPlayerNames () {
+  getPlayerNames (callback) {
     // Names of players
     const rl = readline.createInterface({
       input: process.stdin,
@@ -36,6 +36,8 @@ class Game {
         rl.close()
       })
     })
+
+    callback()
   }
 
   printPlayers () {
@@ -48,8 +50,7 @@ class Game {
   }
 
   start () {
-    this.getPlayerNames()
-    this.pickFirstPlayer()
+    this.getPlayerNames(() => this.pickFirstPlayer())
   }
 
   pickFirstPlayer () {
@@ -58,6 +59,7 @@ class Game {
     let index = Math.floor(Math.random())
     let firstPlayer = players[index]
 
+    console.log(`First player is ${firstPlayer}`)
     return firstPlayer
   }
 
