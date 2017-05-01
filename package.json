@@ -1,0 +1,27 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Hack Reactor CLI Tic-Tac-Toe Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CraigRodrigues/TicTacToe.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Craig Rodrigues",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CraigRodrigues/TicTacToe/issues"
+  },
+  "homepage": "https://github.com/CraigRodrigues/TicTacToe#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "tape": "^4.6.3"
+  }
+}
