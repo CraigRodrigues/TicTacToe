@@ -29,15 +29,17 @@ class Game {
       this.playerOne = answer
       console.log(`Thank you ${answer}`)
 
-      rl.close()
-    })
+      rl.question(`Player two's name: `, (answer) => {
+        this.playerTwo = answer
+        console.log(`Thank you ${answer}`)
 
-    rl.question(`Player two's name: `, (answer) => {
-      this.playerTwo = answer
-      console.log(`Thank you ${answer}`)
-
-      rl.close()
+        rl.close()
+      })
     })
+  }
+
+  printPlayers () {
+    return [this.playerOne, this.playerTwo]
   }
 
   winner () {
