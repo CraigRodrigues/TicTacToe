@@ -34,10 +34,9 @@ class Game {
         console.log(`Thank you ${answer}`)
 
         rl.close()
+        callback()
       })
     })
-
-    callback()
   }
 
   printPlayers () {
