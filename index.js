@@ -35,17 +35,3 @@
 // Players choose a space to place their piece
 // Continue until DRAW or WINNER
 // Once a player has won will offer the option to play again or quit
-
-class Board {
-  constructor (size = 3) {
-    this.size = size
-  }
-
-  init () {
-    // Create board of size x size
-  }
-}
-
-module.exports = {
-  Board
-}
