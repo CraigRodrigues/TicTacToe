@@ -12,3 +12,19 @@
 // * Implement win detection with a functional rather than iterative style.
 // * Between moves, rotate the board 90 degrees counter-clockwise. The moves "fall" due to "gravity", post-rotation.
 
+// CLASSES
+
+// BOARD
+// Creates fresh board
+// Rotates before for stretch goals
+
+// PLAYER
+// Todo
+
+// GAME
+// Keeps track of player turns
+// Win detection
+// Notifies whose turn
+// Keeps track of win/losses
+// Keeps track of player names
+
