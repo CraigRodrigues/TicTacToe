@@ -27,4 +27,25 @@
 // Notifies whose turn
 // Keeps track of win/losses
 // Keeps track of player names
+// Randomly picks who goes first
 
+// Run index.js
+// Game starts by creating new Game instance
+// Game instance creates new board instance
+// Players choose a space to place their piece
+// Continue until DRAW or WINNER
+// Once a player has won will offer the option to play again or quit
+
+class Board {
+  constructor (size = 3) {
+    this.size = size
+  }
+
+  init () {
+    // Create board of size x size
+  }
+}
+
+module.exports = {
+  Board
+}
