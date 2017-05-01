@@ -50,7 +50,7 @@ class Game {
   }
 
   start () {
-    this.getPlayerNames(() => this.pickFirstPlayer())
+    this.getPlayerNames(this.pickFirstPlayer.bind(this))
   }
 
   pickFirstPlayer () {
