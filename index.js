@@ -35,3 +35,8 @@
 // Players choose a space to place their piece
 // Continue until DRAW or WINNER
 // Once a player has won will offer the option to play again or quit
+
+const Game = require('./Game')
+
+let myGame = new Game()
+myGame.getPlayerNames()

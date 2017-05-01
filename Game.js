@@ -7,6 +7,7 @@
 // Randomly picks who goes first
 
 const readline = require('readline')
+const Board = require('./Board')
 
 class Game {
   constructor (n) {
@@ -19,13 +20,30 @@ class Game {
 
   getPlayerNames () {
     // Names of players
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
+
+    rl.question(`Player one's name: `, (answer) => {
+      this.playerOne = answer
+      console.log(`Thank you ${answer}`)
+
+      rl.close()
+    })
+
+    rl.question(`Player two's name: `, (answer) => {
+      this.playerTwo = answer
+      console.log(`Thank you ${answer}`)
+
+      rl.close()
+    })
   }
 
   winner () {
     // Checks board for winner
     // Returns name of winner and ends game
   }
-
 
   start () {
     // Starts game
