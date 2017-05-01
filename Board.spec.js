@@ -9,13 +9,13 @@ test('Board', board => {
   myBoard.init()
 
   actual = myBoard.print()
-  expected = JSON.stringify([
+  expected = [
     ['[]', '[]', '[]'],
     ['[]', '[]', '[]'],
     ['[]', '[]', '[]']
-  ])
+  ]
 
-  board.ok(actual, expected, 'Should init and print a board of 3x3')
+  board.deepEqual(actual, expected, 'Should init and print a board of 3x3')
 
   board.end()
 })
