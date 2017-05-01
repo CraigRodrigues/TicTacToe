@@ -2,8 +2,8 @@ const test = require('tape')
 const Board = require('./Board')
 
 test('Board', board => {
-  let actual
-  let expected
+  let actual = ''
+  let expected = ''
 
   let myBoard = new Board(3)
   myBoard.init()

@@ -1,4 +1,4 @@
-export default class Board {
+class Board {
   constructor (n) {
     this.size = n
   }
@@ -11,3 +11,5 @@ export default class Board {
     // Prints board to console
   }
 }
+
+module.exports = Board
