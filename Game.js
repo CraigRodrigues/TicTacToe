@@ -106,29 +106,32 @@ class Game {
 
   placeMark (square) {
     let mark
-    if (this.turn === 0) {
-      mark = '[X]'
-    } else {
-      mark = '[O]'
+    this.turn === 0 ? mark = '[X]' : mark = '[O]'
+
+    const boardPosition = {
+      1: {row: 0, col: 0, marked: false},
+      2: {row: 0, col: 1, marked: false},
+      3: {row: 0, col: 2, marked: false},
+      4: {row: 1, col: 0, marked: false},
+      5: {row: 1, col: 1, marked: false},
+      6: {row: 1, col: 2, marked: false},
+      7: {row: 2, col: 0, marked: false},
+      8: {row: 2, col: 1, marked: false},
+      9: {row: 2, col: 2, marked: false}
     }
 
-    let boardPosition = {
-      1: {row: 0, col: 0},
-      2: {row: 0, col: 1},
-      3: {row: 0, col: 2},
-      4: {row: 1, col: 0},
-      5: {row: 1, col: 1},
-      6: {row: 1, col: 2},
-      7: {row: 2, col: 0},
-      8: {row: 2, col: 1},
-      9: {row: 2, col: 2}
-    }
+    let { row, col, marked } = boardPosition[square]
+    console.log(`Marked: ${marked}`)
 
-    const { row, col } = boardPosition[square]
-    if (this.board.board[row][col] === '[]' && square <= 9 && square > 0) {
-      this.board.board[row][col] = mark
-    } else {
+    if (square > 9 || square < 1 || marked === true) {
       console.log('INVALID MOVE, TURN SKIPPED')
+      console.log(this.board.board)
+      return
+    }
+
+    if (this.board.board[row][col] === '[]') {
+      marked = true
+      this.board.board[row][col] = mark
     }
 
     console.log(this.board.board)
@@ -149,9 +152,10 @@ class Game {
         output: process.stdout
       })
 
-      rl.question('Play again? (Y/N)', (response) => {
+      rl.question('Play again? (Y/N) ', (response) => {
         rl.close()
         if (response === 'Y') {
+          this.board.init()
           this.rounds = 0
           this.start()
         }
