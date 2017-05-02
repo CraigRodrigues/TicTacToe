@@ -1,5 +1,5 @@
 class Board {
-  constructor (n) {
+  constructor (n = 3) {
     this.size = n
     this.board = null
   }
@@ -19,12 +19,15 @@ class Board {
       board.push(row)
     }
 
-    console.log(board)
     this.board = board
   }
 
   print () {
     return this.board
+  }
+
+  size () {
+    return this.size
   }
 }
 

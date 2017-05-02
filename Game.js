@@ -11,8 +11,11 @@ const Board = require('./Board')
 
 class Game {
   constructor (n) {
+    this.board = new Board(3)
+    this.turn = 0
     this.game = []
     this.winner = ''
+    this.players = []
     this.playerOne = ''
     this.playerTwo = ''
     this.active = true
@@ -26,40 +29,61 @@ class Game {
     })
 
     rl.question(`Player one's name: `, (answer) => {
-      this.playerOne = answer
+      this.players[0] = answer
       console.log(`Thank you ${answer}`)
 
       rl.question(`Player two's name: `, (answer) => {
-        this.playerTwo = answer
+        this.players[1] = answer
         console.log(`Thank you ${answer}`)
 
-        rl.close()
+        rl.pause()
         callback()
       })
     })
   }
 
   printPlayers () {
-    return [this.playerOne, this.playerTwo]
+    console.log(`
+      TIC TAC TOE
+      -----------
+      Player One: ${this.players[0]}
+      Player Two: ${this.players[1]}
+    `)
   }
 
   winner () {
     // Checks board for winner
     // Returns name of winner and ends game
+    // Return boolean
+  }
+
+  promptPlayer () {
+    // Prompts player for a move
   }
 
   start () {
     this.getPlayerNames(this.pickFirstPlayer.bind(this))
+    // let rounds = Math.pow(this.board.size(), 2)
+    this.board.init()
+    console.log(this.board)
+
+    // while (!this.winner()) {
+    //   this.promptPlayer() {
+    //     // Log name of player to play
+    //     // Get coordinates of move
+    //   }
+    // }
+
+    // Check for winner
   }
 
   pickFirstPlayer () {
     // Randomly chooses who plays first
-    let players = this.printPlayers()
     let index = Math.floor(Math.random())
-    let firstPlayer = players[index]
 
-    console.log(`First player is ${firstPlayer}`)
-    return firstPlayer
+    // Set first turn index
+    index === 0 ? this.turn = 0 : this.turn = 1
+    this.printPlayers()
   }
 
   placeMark (i, j) {
