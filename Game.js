@@ -14,13 +14,12 @@ class Game {
     this.board = new Board(3)
     this.turn = 0
     this.game = []
-    this.players = []
     this.playerOne = ''
     this.playerTwo = ''
     this.active = true
   }
 
-  getPlayerOneName (callback) {
+  getPlayerName (playerNumber) {
     // Names of players
     return new Promise((resolve, reject) => {
       const rl = readline.createInterface({
@@ -28,7 +27,14 @@ class Game {
         output: process.stdout
       })
 
-      rl.question('Player one\'s name: ', (name) => {
+      rl.question(`Player ${playerNumber}'s' name?: `, (name) => {
+        if (playerNumber === 1) {
+          this.playerOne = name
+        }
+        if (playerNumber === 2) {
+          this.playerTwo = name
+        }
+
         rl.close()
         resolve(name)
       })
@@ -39,8 +45,8 @@ class Game {
     console.log(`
       TIC TAC TOE
       -----------
-      Player One: ${this.players[0]}
-      Player Two: ${this.players[1]}
+      Player One: ${this.playerOne}
+      Player Two: ${this.playerTwo}
     `)
   }
 
@@ -71,26 +77,23 @@ class Game {
 
   start () {
     // Get the names of our players and pick who plays first
-    this.getPlayerOneName()
-      .then(name => {
-        console.log(name)
+    this.getPlayerName(1)
+      .then(() => this.getPlayerName(2))
+      .then(() => this.printPlayers())
+      // Initialize the board
+      .then(() => this.board.init())
+      .then(() => console.log(this.board))
+      .then(() => {
+        // Check for winner
+        while (!this.winner()) {
+          this.promptPlayer()
+            .then(() => this.board.print())
+            // Move to next player
+            .then(() => this.nextPlayer())
+        }
       })
-
-    // Initialize the board
-    // this.board.init()
-
-    // // Print the blank board
-    // console.log(this.board)
-
-    // // Check for winner
-    // console.log(this)
-    // while (!this.winner()) {
-    //   this.board.print()
-    //   this.promptPlayer()
-
-    //   // Move to next player
-    //   this.turn === 0 ? this.turn = 1 : this.turn = 0
-    // }
+      .then(() => this.printWinner())
+      .then(() => this.playAgain())
   }
 
   pickFirstPlayer () {

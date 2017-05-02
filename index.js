@@ -12,23 +12,6 @@
 // * Implement win detection with a functional rather than iterative style.
 // * Between moves, rotate the board 90 degrees counter-clockwise. The moves "fall" due to "gravity", post-rotation.
 
-// CLASSES
-
-// BOARD
-// Creates fresh board
-// Rotates before for stretch goals
-
-// PLAYER
-// Todo
-
-// GAME
-// Keeps track of player turns
-// Win detection
-// Notifies whose turn
-// Keeps track of win/losses
-// Keeps track of player names
-// Randomly picks who goes first
-
 // Run index.js
 // Game starts by creating new Game instance
 // Game instance creates new board instance
@@ -39,4 +22,6 @@
 const Game = require('./Game')
 
 let myGame = new Game()
+
+// START THE GAME
 myGame.start()

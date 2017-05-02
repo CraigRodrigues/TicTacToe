@@ -1,3 +1,7 @@
+// BOARD
+// Creates fresh board
+// Rotates before for stretch goals
+
 class Board {
   constructor (n = 3) {
     this.size = n
