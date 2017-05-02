@@ -4,6 +4,7 @@
   "description": "Hack Reactor CLI Tic-Tac-Toe Game",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "test"
   },
   "repository": {
