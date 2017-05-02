@@ -7,7 +7,7 @@ test('Game', game => {
 
   let myGame = new Game()
 
-  actual = myGame.getPlayerNames()
+  actual = myGame.getPlayerName('Craig', 'Fred')
   expected = ['Craig', 'Fred']
 
   game.deepEqual(actual, expected, 'Should accept names of players and return them')

@@ -17,6 +17,7 @@ class Game {
     this.playerOne = ''
     this.playerTwo = ''
     this.active = true
+    this.rounds = 0
   }
 
   getPlayerName (playerNumber) {
@@ -41,6 +42,10 @@ class Game {
     })
   }
 
+  nextPlayer () {
+    this.turn === 0 ? this.turn = 1 : this.turn = 0
+  }
+
   printPlayers () {
     console.log(`
       TIC TAC TOE
@@ -60,9 +65,9 @@ class Game {
 
       console.log(`${this.players[this.turn]}'s Play!`)
 
-      rl.question('Type your move (x, y): ', (coords) => {
+      rl.question('Type your move (1-9): ', (square) => {
         rl.close()
-        resolve(coords)
+        resolve(square)
       })
     })
   }
@@ -77,15 +82,24 @@ class Game {
       .then(() => console.log(this.board))
       .then(() => {
         // Check for winner
-        while (!this.board.winner(this.board.board, this.turn)) {
+        while (!this.board.winner(this.board.board, this.turn) && this.rounds < 10) {
           this.promptPlayer()
+            .then((square) => this.placeMark(square))
             .then(() => this.board.print())
             // Move to next player
             .then(() => this.nextPlayer())
+            .then(this.rounds++)
         }
       })
-      .then(() => this.printWinner())
-      .then(() => this.playAgain())
+      .then(() => this.announceWinner())
+      .then(() => this.gameOver())
+      .then((response) => {
+        if (response === 'Y') {
+          this.start()
+        } else {
+          throw new Error('Game over')
+        }
+      })
       .catch(err => console.log(err))
   }
 
@@ -98,23 +112,46 @@ class Game {
     this.printPlayers()
   }
 
-  placeMark (i, j) {
+  placeMark (square) {
     let mark
     if (this.turn === 0) {
-      mark = 'O'
-    } else {
       mark = 'X'
+    } else {
+      mark = 'O'
     }
 
-    this.board.board[i][j] = mark
+    let boardPosition = {
+      1: this.board.board[0][0],
+      2: this.board.board[0][1],
+      3: this.board.board[0][2],
+      4: this.board.board[1][0],
+      5: this.board.board[1][1],
+      6: this.board.board[1][2],
+      7: this.board.board[2][0],
+      8: this.board.board[2][1],
+      9: this.board.board[2][2]
+    }
+
+    boardPosition[square] = mark
   }
 
-  announceWinner () {
+  announceWinner (player) {
     // Prints game winner
   }
 
   gameOver () {
     // Asks if players wish to play again
+    return new Promise((resolve, reject) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      })
+
+      rl.question('Play again? (Y/N)', (response) => {
+        rl.close()
+        resolve(response)
+      })
+    })
   }
 }
 
