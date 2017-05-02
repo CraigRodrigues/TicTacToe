@@ -16,7 +16,6 @@ class Game {
     this.game = []
     this.playerOne = ''
     this.playerTwo = ''
-    this.active = true
     this.rounds = 0
 
     this.board.init()
@@ -87,6 +86,7 @@ class Game {
       // Check if winner or draw
       if (this.board.winner(this.board.board, this.turn)) {
         this.announceWinner()
+        this.gameOver()
       } else {
         this.nextPlayer()
         this.rounds++
@@ -125,14 +125,20 @@ class Game {
     }
 
     const { row, col } = boardPosition[square]
-    this.board.board[row][col] = mark
+    if (this.board.board[row][col] === '[]' && square <= 9 && square > 0) {
+      this.board.board[row][col] = mark
+    } else {
+      console.log('INVALID MOVE, TURN SKIPPED')
+    }
 
     console.log(this.board.board)
   }
 
   announceWinner (player) {
     // Prints game winner
-    console.log('Winner')
+    let winner
+    this.turn === 0 ? winner = this.playerOne : winner = this.playerTwo
+    console.log(`WINNER: ${winner}`)
   }
 
   gameOver () {
@@ -145,7 +151,10 @@ class Game {
 
       rl.question('Play again? (Y/N)', (response) => {
         rl.close()
-        resolve(response)
+        if (response === 'Y') {
+          this.rounds = 0
+          this.start()
+        }
       })
     })
   }
