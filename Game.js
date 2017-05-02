@@ -55,6 +55,13 @@ class Game {
       Player One: ${this.playerOne}
       Player Two: ${this.playerTwo}
     `)
+
+    return (`
+      TIC TAC TOE
+      -----------
+      Player One: ${this.playerOne}
+      Player Two: ${this.playerTwo}
+    `)
   }
 
   promptPlayer (callback) {
@@ -97,11 +104,13 @@ class Game {
 
   pickFirstPlayer () {
     // Randomly chooses who plays first
-    let index = Math.floor(Math.random())
+    const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+    let index = getRandomInt(0, 1)
 
     // Set first turn index
     index === 0 ? this.turn = 0 : this.turn = 1
-    this.printPlayers()
+
+    return index
   }
 
   placeMark (square) {
