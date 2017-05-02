@@ -63,9 +63,12 @@ class Game {
         output: process.stdout
       })
 
-      console.log(`${this.players[this.turn]}'s Play!`)
+      let players = {
+        0: this.playerOne,
+        1: this.playerTwo
+      }
 
-      rl.question('Type your move (1-9): ', (square) => {
+      rl.question(`Type your move ${players[this.turn]} (1-9): `, (square) => {
         rl.close()
         resolve(square)
       })
@@ -82,6 +85,7 @@ class Game {
       .then(() => console.log(this.board))
       .then(() => {
         // Check for winner
+        console.log('Board', this.board.board)
         while (!this.board.winner(this.board.board, this.turn) && this.rounds < 10) {
           this.promptPlayer()
             .then((square) => this.placeMark(square))
@@ -89,6 +93,7 @@ class Game {
             // Move to next player
             .then(() => this.nextPlayer())
             .then(this.rounds++)
+            .catch(err => console.log(err))
         }
       })
       .then(() => this.announceWinner())
