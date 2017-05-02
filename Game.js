@@ -14,7 +14,6 @@ class Game {
     this.board = new Board(3)
     this.turn = 0
     this.game = []
-    this.winner = ''
     this.players = []
     this.playerOne = ''
     this.playerTwo = ''
@@ -31,12 +30,14 @@ class Game {
     rl.question(`Player one's name: `, (answer) => {
       this.players[0] = answer
       console.log(`Thank you ${answer}`)
+      rl.pause()
 
       rl.question(`Player two's name: `, (answer) => {
         this.players[1] = answer
         console.log(`Thank you ${answer}`)
-
         rl.pause()
+
+        rl.close()
         callback()
       })
     })
@@ -52,29 +53,48 @@ class Game {
   }
 
   winner () {
-    // Checks board for winner
-    // Returns name of winner and ends game
-    // Return boolean
+    if (this.turn === 0) {
+      return false
+    } else {
+      return true
+    }
   }
 
   promptPlayer () {
     // Prompts player for a move
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
+
+    console.log(`${this.players[this.turn]}'s Play!`)
+
+    rl.question('Type your move (x, y): ', (coords) => {
+
+      this.placeMark(coords)
+      rl.close()
+    })
   }
 
   start () {
+    // Get the names of our players and pick who plays first
     this.getPlayerNames(this.pickFirstPlayer.bind(this))
-    // let rounds = Math.pow(this.board.size(), 2)
+
+    // Initialize the board
     this.board.init()
+
+    // Print the blank board
     console.log(this.board)
 
-    // while (!this.winner()) {
-    //   this.promptPlayer() {
-    //     // Log name of player to play
-    //     // Get coordinates of move
-    //   }
-    // }
-
     // Check for winner
+    console.log(this)
+    while (!this.winner()) {
+      this.board.print()
+      this.promptPlayer()
+
+      // Move to next player
+      this.turn === 0 ? this.turn = 1 : this.turn = 0
+    }
   }
 
   pickFirstPlayer () {
@@ -87,7 +107,14 @@ class Game {
   }
 
   placeMark (i, j) {
-    // Puts a mark at the coordinates specified by the player
+    let mark
+    if (this.turn === 0) {
+      mark = 'O'
+    } else {
+      mark = 'X'
+    }
+
+    this.board.board[i][j] = mark
   }
 
   announceWinner () {
