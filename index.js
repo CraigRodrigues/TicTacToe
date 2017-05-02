@@ -24,4 +24,8 @@ const Game = require('./Game')
 let myGame = new Game()
 
 // START THE GAME
-myGame.start()
+myGame.getPlayerNames(1)
+  .then(() => myGame.getPlayerNames(2))
+  .then(() => myGame.pickFirstPlayer())
+  .then(() => myGame.start())
+  .catch(err => console.log(err))

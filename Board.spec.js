@@ -23,7 +23,7 @@ test('Board', board => {
     ['[]', '[]', '[]']
   ]
 
-  actual = myBoard.winner(myBoard.board, 1)
+  actual = myBoard.winner(myBoard.board, 0)
   expected = true
 
   board.equal(actual, expected, 'Should return true for a row')
@@ -34,10 +34,10 @@ test('Board', board => {
     ['[O]', '[]', '[]']
   ]
 
-  actual = myBoard.winner(myBoard.board, 2)
+  actual = myBoard.winner(myBoard.board, 1)
   expected = true
 
-  board.equal(actual, expected, 'Should return true for a columns')
+  board.equal(actual, expected, 'Should return true for columns')
 
   myBoard.board = [
     ['[O]', '[]', '[]'],
@@ -45,10 +45,10 @@ test('Board', board => {
     ['[]', '[]', '[O]']
   ]
 
-  actual = myBoard.winner(myBoard.board, 2)
+  actual = myBoard.winner(myBoard.board, 1)
   expected = true
 
-  board.equal(actual, expected, 'Should return true for a columns')
+  board.equal(actual, expected, 'Should return true for diagonal')
 
   board.end()
 })

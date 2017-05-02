@@ -29,7 +29,7 @@ class Board {
   winner (board, player) {
     // Assuming 3x3 board
     let mark
-    player === 1 ? mark = '[X]' : mark = '[O]'
+    player === 0 ? mark = '[X]' : mark = '[O]'
 
     // Check rows
     for (let i = 0; i < 3; i++) {

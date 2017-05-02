@@ -18,9 +18,12 @@ class Game {
     this.playerTwo = ''
     this.active = true
     this.rounds = 0
+
+    this.board.init()
+    console.log(this.board)
   }
 
-  getPlayerName (playerNumber) {
+  getPlayerNames (playerNumber) {
     // Names of players
     return new Promise((resolve, reject) => {
       const rl = readline.createInterface({
@@ -55,57 +58,41 @@ class Game {
     `)
   }
 
-  promptPlayer (board) {
+  promptPlayer (callback) {
     // Prompts player for a move
-    return new Promise((resolve, reject) => {
-      const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-      })
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
 
-      let players = {
-        0: this.playerOne,
-        1: this.playerTwo
-      }
+    let players = {
+      0: this.playerOne,
+      1: this.playerTwo
+    }
 
-      rl.question(`Type your move ${players[this.turn]} (1-9): `, (square) => {
-        rl.close()
-        resolve(square)
-      })
+    rl.question(`Type your move ${players[this.turn]} (1-9): `, (square) => {
+      rl.close()
+      this.placeMark(square)
+      callback()
     })
   }
 
   start () {
-    // Get the names of our players and pick who plays first
-    this.getPlayerName(1)
-      .then(() => this.getPlayerName(2))
-      .then(() => this.printPlayers())
-      // Initialize the board
-      .then(() => this.board.init())
-      .then(() => console.log(this.board))
-      .then(() => {
-        // Check for winner
-        console.log('Board', this.board.board)
-        while (!this.board.winner(this.board.board, this.turn) && this.rounds < 10) {
-          this.promptPlayer()
-            .then((square) => this.placeMark(square))
-            .then(() => this.board.print())
-            // Move to next player
-            .then(() => this.nextPlayer())
-            .then(this.rounds++)
-            .catch(err => console.log(err))
-        }
-      })
-      .then(() => this.announceWinner())
-      .then(() => this.gameOver())
-      .then((response) => {
-        if (response === 'Y') {
-          this.start()
-        } else {
-          throw new Error('Game over')
-        }
-      })
-      .catch(err => console.log(err))
+    // Prompt player move
+    if (this.rounds > 9) {
+      return 'DRAW!'
+    }
+
+    this.promptPlayer(() => {
+      // Check if winner or draw
+      if (this.board.winner(this.board.board, this.turn)) {
+        this.announceWinner()
+      } else {
+        this.nextPlayer()
+        this.rounds++
+        this.start()
+      }
+    })
   }
 
   pickFirstPlayer () {
@@ -120,28 +107,32 @@ class Game {
   placeMark (square) {
     let mark
     if (this.turn === 0) {
-      mark = 'X'
+      mark = '[X]'
     } else {
-      mark = 'O'
+      mark = '[O]'
     }
 
     let boardPosition = {
-      1: this.board.board[0][0],
-      2: this.board.board[0][1],
-      3: this.board.board[0][2],
-      4: this.board.board[1][0],
-      5: this.board.board[1][1],
-      6: this.board.board[1][2],
-      7: this.board.board[2][0],
-      8: this.board.board[2][1],
-      9: this.board.board[2][2]
+      1: {row: 0, col: 0},
+      2: {row: 0, col: 1},
+      3: {row: 0, col: 2},
+      4: {row: 1, col: 0},
+      5: {row: 1, col: 1},
+      6: {row: 1, col: 2},
+      7: {row: 2, col: 0},
+      8: {row: 2, col: 1},
+      9: {row: 2, col: 2}
     }
 
-    boardPosition[square] = mark
+    const { row, col } = boardPosition[square]
+    this.board.board[row][col] = mark
+
+    console.log(this.board.board)
   }
 
   announceWinner (player) {
     // Prints game winner
+    console.log('Winner')
   }
 
   gameOver () {
