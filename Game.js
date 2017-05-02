@@ -20,25 +20,17 @@ class Game {
     this.active = true
   }
 
-  getPlayerNames (callback) {
+  getPlayerOneName (callback) {
     // Names of players
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    })
+    return new Promise((resolve, reject) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      })
 
-    rl.question(`Player one's name: `, (answer) => {
-      this.players[0] = answer
-      console.log(`Thank you ${answer}`)
-      rl.pause()
-
-      rl.question(`Player two's name: `, (answer) => {
-        this.players[1] = answer
-        console.log(`Thank you ${answer}`)
-        rl.pause()
-
+      rl.question('Player one\'s name: ', (name) => {
         rl.close()
-        callback()
+        resolve(name)
       })
     })
   }
@@ -62,39 +54,43 @@ class Game {
 
   promptPlayer () {
     // Prompts player for a move
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    })
+    return new Promise((resolve, reject) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      })
 
-    console.log(`${this.players[this.turn]}'s Play!`)
+      console.log(`${this.players[this.turn]}'s Play!`)
 
-    rl.question('Type your move (x, y): ', (coords) => {
-
-      this.placeMark(coords)
-      rl.close()
+      rl.question('Type your move (x, y): ', (coords) => {
+        rl.close()
+        resolve(coords)
+      })
     })
   }
 
   start () {
     // Get the names of our players and pick who plays first
-    this.getPlayerNames(this.pickFirstPlayer.bind(this))
+    this.getPlayerOneName()
+      .then(name => {
+        console.log(name)
+      })
 
     // Initialize the board
-    this.board.init()
+    // this.board.init()
 
-    // Print the blank board
-    console.log(this.board)
+    // // Print the blank board
+    // console.log(this.board)
 
-    // Check for winner
-    console.log(this)
-    while (!this.winner()) {
-      this.board.print()
-      this.promptPlayer()
+    // // Check for winner
+    // console.log(this)
+    // while (!this.winner()) {
+    //   this.board.print()
+    //   this.promptPlayer()
 
-      // Move to next player
-      this.turn === 0 ? this.turn = 1 : this.turn = 0
-    }
+    //   // Move to next player
+    //   this.turn === 0 ? this.turn = 1 : this.turn = 0
+    // }
   }
 
   pickFirstPlayer () {
