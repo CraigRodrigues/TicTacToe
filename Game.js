@@ -134,7 +134,7 @@ class Game {
       this.board.board[row][col] = mark
     }
 
-    console.log(this.board.board)
+    this.board.print()
   }
 
   announceWinner (player) {
