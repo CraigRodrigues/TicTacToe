@@ -26,6 +26,36 @@ class Board {
     this.board = board
   }
 
+  winner (board, player) {
+    // Assuming 3x3 board
+    let mark
+    player === 1 ? mark = '[X]' : mark = '[O]'
+
+    // Check rows
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0] === mark && board[i][1] === mark && board[i][2] === mark) {
+        return true
+      }
+    }
+
+    // Check columns
+    for (let i = 0; i < 3; i++) {
+      if (board[0][i] === mark && board[1][i] === mark && board[2][i] === mark) {
+        return true
+      }
+    }
+
+    // Check diagonal
+    if (board[0][0] === mark && board[1][1] === mark && board[2][2] === mark) {
+      return true
+    }
+    if (board[0][2] === mark && board[1][1] === mark && board[2][0] === mark) {
+      return true
+    }
+
+    return false
+  }
+
   print () {
     return this.board
   }

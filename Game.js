@@ -50,15 +50,7 @@ class Game {
     `)
   }
 
-  winner () {
-    if (this.turn === 0) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  promptPlayer () {
+  promptPlayer (board) {
     // Prompts player for a move
     return new Promise((resolve, reject) => {
       const rl = readline.createInterface({
@@ -85,7 +77,7 @@ class Game {
       .then(() => console.log(this.board))
       .then(() => {
         // Check for winner
-        while (!this.winner()) {
+        while (!this.board.winner(this.board.board, this.turn)) {
           this.promptPlayer()
             .then(() => this.board.print())
             // Move to next player
@@ -94,6 +86,7 @@ class Game {
       })
       .then(() => this.printWinner())
       .then(() => this.playAgain())
+      .catch(err => console.log(err))
   }
 
   pickFirstPlayer () {
