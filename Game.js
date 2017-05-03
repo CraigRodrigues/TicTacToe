@@ -19,7 +19,7 @@ class Game {
     this.rounds = 0
 
     this.board.init()
-    console.log(this.board)
+    this.board.print()
   }
 
   getPlayerNames (playerNumber) {
@@ -78,8 +78,12 @@ class Game {
 
     rl.question(`Type your move ${players[this.turn]} (1-9): `, (square) => {
       rl.close()
-      this.placeMark(square)
-      callback()
+      if (square > 9 || square < 1) {
+        console.log('Quitting Game')
+      } else {
+        this.placeMark(square)
+        callback()
+      }
     })
   }
 
@@ -115,31 +119,26 @@ class Game {
 
   placeMark (square) {
     let mark
+    const boardPosition = {
+      1: {row: 0, col: 0},
+      2: {row: 0, col: 1},
+      3: {row: 0, col: 2},
+      4: {row: 1, col: 0},
+      5: {row: 1, col: 1},
+      6: {row: 1, col: 2},
+      7: {row: 2, col: 0},
+      8: {row: 2, col: 1},
+      9: {row: 2, col: 2}
+    }
+
+    let { row, col } = boardPosition[square]
     this.turn === 0 ? mark = '[X]' : mark = '[O]'
 
-    const boardPosition = {
-      1: {row: 0, col: 0, marked: false},
-      2: {row: 0, col: 1, marked: false},
-      3: {row: 0, col: 2, marked: false},
-      4: {row: 1, col: 0, marked: false},
-      5: {row: 1, col: 1, marked: false},
-      6: {row: 1, col: 2, marked: false},
-      7: {row: 2, col: 0, marked: false},
-      8: {row: 2, col: 1, marked: false},
-      9: {row: 2, col: 2, marked: false}
-    }
-
-    let { row, col, marked } = boardPosition[square]
-    console.log(`Marked: ${marked}`)
-
-    if (square > 9 || square < 1 || marked === true) {
+    if (square > 9 || square < 1 || this.board.board[row][col] !== '[]') {
       console.log('INVALID MOVE, TURN SKIPPED')
-      console.log(this.board.board)
+      this.board.print()
       return
-    }
-
-    if (this.board.board[row][col] === '[]') {
-      marked = true
+    } else {
       this.board.board[row][col] = mark
     }
 
