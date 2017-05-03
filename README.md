@@ -6,11 +6,14 @@
 
 To play:
 
-```npm install
-
-npm start```
+```
+npm install
+npm start
+```
 
 Testing with Tape:
-```npm test```
+```
+npm test
+```
 
 *Requirements: ES6*
