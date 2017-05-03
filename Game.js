@@ -79,12 +79,25 @@ class Game {
     rl.question(`Type your move ${players[this.turn]} (1-9): `, (square) => {
       rl.close()
       if (square > 9 || square < 1) {
-        console.log('Quitting Game')
+        console.log('Invalid Entry: Please try again! (1-9)')
+        this.promptPlayer(this.gameRound.bind(this))
       } else {
         this.placeMark(square)
         callback()
       }
     })
+  }
+
+  gameRound () {
+    // Check if winner or draw
+    if (this.board.winner(this.board.board, this.turn)) {
+      this.announceWinner()
+      this.gameOver()
+    } else {
+      this.nextPlayer()
+      this.rounds++
+      this.start()
+    }
   }
 
   start () {
@@ -93,17 +106,7 @@ class Game {
       return 'DRAW!'
     }
 
-    this.promptPlayer(() => {
-      // Check if winner or draw
-      if (this.board.winner(this.board.board, this.turn)) {
-        this.announceWinner()
-        this.gameOver()
-      } else {
-        this.nextPlayer()
-        this.rounds++
-        this.start()
-      }
-    })
+    this.promptPlayer(this.gameRound.bind(this))
   }
 
   pickFirstPlayer () {
@@ -135,7 +138,7 @@ class Game {
     this.turn === 0 ? mark = '[X]' : mark = '[O]'
 
     if (square > 9 || square < 1 || this.board.board[row][col] !== '[]') {
-      console.log('INVALID MOVE, TURN SKIPPED')
+      console.log('Piece already there. Skipping your turn!')
       this.board.print()
       return
     } else {
