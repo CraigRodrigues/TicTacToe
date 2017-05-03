@@ -75,6 +75,7 @@ class Game {
         this.promptPlayer(this.gameRound.bind(this))
       } else {
         this.placeMark(square)
+        this.rounds++
         callback()
       }
     })
@@ -87,7 +88,6 @@ class Game {
       this.gameOver()
     } else {
       this.nextPlayer()
-      this.rounds++
       this.start()
     }
   }
