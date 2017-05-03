@@ -1,6 +1,6 @@
 # CLI TicTacToe
 
-## Simple TicTacToe command-line game
+#### Simple TicTacToe command-line game
 
 ![playthrough](http://i.imgur.com/02jAI8o.gif)
 
