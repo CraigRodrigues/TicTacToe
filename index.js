@@ -12,13 +12,6 @@
 // * Implement win detection with a functional rather than iterative style.
 // * Between moves, rotate the board 90 degrees counter-clockwise. The moves "fall" due to "gravity", post-rotation.
 
-// Run index.js
-// Game starts by creating new Game instance
-// Game instance creates new board instance
-// Players choose a space to place their piece
-// Continue until DRAW or WINNER
-// Once a player has won will offer the option to play again or quit
-
 const Game = require('./Game')
 
 let myGame = new Game()
