@@ -9,11 +9,15 @@ test('Board', board => {
   myBoard.init()
 
   actual = myBoard.print()
-  expected = [
-    ['[]', '[]', '[]'],
-    ['[]', '[]', '[]'],
-    ['[]', '[]', '[]']
-  ]
+  expected = `
+      GAME BOARD
+      ----------
+      [] | [] | []
+      ---------------
+      [] | [] | []
+      ---------------
+      [] | [] | []
+    `
 
   board.deepEqual(actual, expected, 'Should init and print a board of 3x3')
 
