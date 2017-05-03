@@ -11,6 +11,10 @@ npm install
 npm start
 ```
 
+Instructions:
+- Star the game
+- 
+
 Testing with Tape:
 ```
 npm test
