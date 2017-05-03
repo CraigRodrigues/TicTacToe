@@ -12,8 +12,10 @@ npm start
 ```
 
 Instructions:
-- Star the game
-- 
+- Start the game
+- Input player names
+- The game will randomly choose who goes first
+- Once someone wins or there is a draw choose to play again if you want
 
 Testing with Tape:
 ```
